@@ -140,4 +140,4 @@ export class Emailer {
     }
 }
 
-export const emailer = (config: IConfig) => new Emailer(config)
+export const emailer = (config: IConfig): Emailer => new Emailer(config)
