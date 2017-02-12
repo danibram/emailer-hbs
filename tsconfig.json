@@ -2,14 +2,18 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "ES6",
-        "strictNullCheck": true,
         "noImplicitAny": false,
         "moduleResolution": "node",
         "sourceMap": true,
         "rootDir": "src",
-        "outDir": "dist"
+        "outDir": "dist",
+        "declaration": true
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        ".vscode"
+    ],
+    "include": [
+        "src/**/*.ts"
     ]
 }
