@@ -1,5 +1,7 @@
 # emailer-hbs
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/danibram/emailer-hbs.svg)](https://greenkeeper.io/)
+
 ## What is this?
 
 `emailer-hbs` is a super hero that helps you to have the full control of your emails in your API. Its powered by:
