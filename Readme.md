@@ -63,7 +63,7 @@ That is the explanation:
 ```npm install emailer-hbs```
 
 ```
-import { Emailer } from 'mailer-hbs'
+import { Emailer } from 'emailer-hbs'
 
 import config from '../config'
 
@@ -77,7 +77,7 @@ export default new Emailer(config.mailer)
 OR
 
 ```
-import Mailer from 'mailer-hbs'
+import Mailer from 'emailer-hbs'
 import config from '../config'
 
 if (config.env !== 'development' && config.mailer.overrideEmail) {
