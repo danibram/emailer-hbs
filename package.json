@@ -1,28 +1,28 @@
 {
-  "name": "emailer-hbs",
-  "version": "1.0.4",
-  "description": "",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && tsc -p tsconfig.json"
-  },
-  "keywords": [
-    "email",
-    "handlebars",
-    "juice",
-    "templates",
-    "typescript"
-  ],
-  "author": "danibram <info@dbr.io>",
-  "license": "MIT",
-  "dependencies": {
-    "@types/handlebars": "^4.0.31",
-    "@types/nodemailer": "^1.3.32",
-    "handlebars": "^4.0.6",
-    "juice": "^4.0.2",
-    "nodemailer": "^3.0.2",
-    "typescript": "^2.1.6"
-  }
+    "name": "emailer-hbs",
+    "version": "1.0.5",
+    "description": "",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "rm -rf dist && tsc -p tsconfig.json"
+    },
+    "keywords": [
+        "email",
+        "handlebars",
+        "juice",
+        "templates",
+        "typescript"
+    ],
+    "author": "danibram <info@dbr.io>",
+    "license": "MIT",
+    "dependencies": {
+        "@types/handlebars": "^4.0.35",
+        "@types/nodemailer": "^3.1.0",
+        "handlebars": "^4.0.10",
+        "juice": "^4.1.0",
+        "nodemailer": "^4.0.1",
+        "typescript": "^2.4.2"
+    }
 }
