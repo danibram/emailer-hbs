@@ -129,5 +129,5 @@ When you initialize the mailer then you can call this methods:
 
 ## Changelog
 
-08/09/2017: added global from (changes on send and on RenderAndSend)
-02/12/2017: initial release
+- ***08/09/2017***: added global from (changes on RenderAndSend)
+- ***02/12/2017***: initial release
