@@ -93,6 +93,7 @@ let mailer = Mailer(config.mailer)
 
 This is han example, of the folders i use, in src you have the templates and the common parts, of the emails, then when you cache the emails goes to cache folder, partials are like swig partials but for use in handlebars really easy, end the css with the juice power tranform the css in inline css.
 
+```
 templates
 ├── cache
 │   ├── partials
@@ -112,6 +113,7 @@ templates
     └── templates
         ├── access.html
         └── welcome.html
+```
 
 ## Methods
 
