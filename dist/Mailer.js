@@ -89,12 +89,18 @@ class Emailer {
         return this.getconfig(emailKey)
             .then(cfg => this.renderEmail(cfg, data));
     }
-    renderAndSend(to, emailKey, data) {
+    renderAndSend(to, emailKey, data, from) {
         return this.getconfig(emailKey)
             .then(cfg => this.renderEmail(cfg, data))
             .then(({ subject, html }) => this.sendEmail({
-            from: 'postmaster',
-            to: (this.config.overrideEmail) ? this.config.overrideEmail : to,
+            from: from
+                ? from
+                : this.config.from
+                    ? this.config.from
+                    : 'postmaster',
+            to: this.config.overrideEmail
+                ? this.config.overrideEmail
+                : to,
             subject,
             html
         }));

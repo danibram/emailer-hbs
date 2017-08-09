@@ -119,13 +119,19 @@ export class Emailer {
             .then(cfg => this.renderEmail(cfg, data))
     }
 
-    renderAndSend(to, emailKey, data?: Object): Promise<nodemailer.SentMessageInfo> {
+    renderAndSend(to, emailKey, data?: Object, from?: string): Promise<nodemailer.SentMessageInfo> {
 
         return this.getconfig(emailKey)
             .then(cfg => this.renderEmail(cfg, data))
             .then(( {subject, html } ) => this.sendEmail({
-                from: 'postmaster',
-                to:  (this.config.overrideEmail ) ? this.config.overrideEmail : to,
+                from: from
+                    ? from
+                    : this.config.from
+                        ? this.config.from
+                        : 'postmaster',
+                to:  this.config.overrideEmail
+                    ? this.config.overrideEmail
+                    : to,
                 subject,
                 html
             }))

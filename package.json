@@ -1,6 +1,6 @@
 {
     "name": "emailer-hbs",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
@@ -19,7 +19,7 @@
     "license": "MIT",
     "dependencies": {
         "@types/handlebars": "^4.0.35",
-        "@types/nodemailer": "^3.1.0",
+        "@types/nodemailer": "^3.1.1",
         "handlebars": "^4.0.10",
         "juice": "^4.1.0",
         "nodemailer": "^4.0.1",

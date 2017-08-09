@@ -14,7 +14,8 @@ The configuration is very easy:
 
 ```
 {
-    overrideEmail: string|null
+    overrideEmail: string|null,
+    from: string|null,
     css: string[]
     input: string
     output: string
@@ -28,6 +29,7 @@ The configuration is very easy:
 That is the explanation:
 
 - overrideEmail: If this string exists, it override the email you pass by the email you want, easy for devs to test it
+- from: general from, can be override if you, send from parameter to renderAndSend
 - css: Array of css paths you want to use in the emails
 - input: Where are your templates
 - output: Where you want to compile that templates
@@ -86,3 +88,44 @@ if (config.env !== 'development' && config.mailer.overrideEmail) {
 
 let mailer = Mailer(config.mailer)
 ```
+
+## Folders
+
+This is han example, of the folders i use, in src you have the templates and the common parts, of the emails, then when you cache the emails goes to cache folder, partials are like swig partials but for use in handlebars really easy, end the css with the juice power tranform the css in inline css.
+
+templates
+├── cache
+│   ├── partials
+│   │   ├── base.html
+│   │   └── footer.html
+│   └── templates
+│       ├── access.html
+│       └── welcome.html
+└── src
+    ├── css
+    │   ├── ink-emails.css
+    │   ├── ink.css
+    │   └── style.css
+    ├── partials
+    │   ├── base.html
+    │   └── footer.html
+    └── templates
+        ├── access.html
+        └── welcome.html
+
+## Methods
+
+When you initialize the mailer then you can call this methods:
+
+- renderEmail (internal): render html with handlebars
+- sendEmail (internal): send an email
+- cacheEmails: cache emails, put css inline with juice and generate the final email
+- getconfig: get the config for that template
+- renderTemplate: render template
+- renderAndSend: render the template and send
+
+
+## Changelog
+
+08/09/2017: added global from (changes on send and on RenderAndSend)
+02/12/2017: initial release

@@ -30,9 +30,9 @@
     "@types/node" "*"
     "@types/nodemailer" "*"
 
-"@types/nodemailer@*", "@types/nodemailer@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-3.1.0.tgz#baa8a4d5a70cad5551c4239314eb2ef7f055d005"
+"@types/nodemailer@*", "@types/nodemailer@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-3.1.1.tgz#ce20d706deb95b0e04841ce87b027d1d0680a1f9"
   dependencies:
     "@types/node" "*"
     "@types/nodemailer-direct-transport" "*"

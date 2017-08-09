@@ -19,7 +19,7 @@ export declare class Emailer {
         html: string;
         subject: string;
     }>;
-    renderAndSend(to: any, emailKey: any, data?: Object): Promise<nodemailer.SentMessageInfo>;
+    renderAndSend(to: any, emailKey: any, data?: Object, from?: string): Promise<nodemailer.SentMessageInfo>;
     sendEmail(data: {
         from: string;
         to: string;
