@@ -65,7 +65,7 @@ That is the explanation:
 ```npm install emailer-hbs```
 
 ```
-import { Emailer } from 'mailer-hbs'
+import { Emailer } from 'emailer-hbs'
 
 import config from '../config'
 
@@ -79,7 +79,7 @@ export default new Emailer(config.mailer)
 OR
 
 ```
-import Mailer from 'mailer-hbs'
+import Mailer from 'emailer-hbs'
 import config from '../config'
 
 if (config.env !== 'development' && config.mailer.overrideEmail) {
@@ -88,6 +88,7 @@ if (config.env !== 'development' && config.mailer.overrideEmail) {
 
 let mailer = Mailer(config.mailer)
 ```
+<<<<<<< HEAD
 
 ## Folders
 
@@ -129,3 +130,5 @@ When you initialize the mailer then you can call this methods:
 
 08/09/2017: added global from (changes on send and on RenderAndSend)
 02/12/2017: initial release
+=======
+>>>>>>> ca323969110f5831cb703035f196df42ac0042bf
