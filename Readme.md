@@ -88,7 +88,6 @@ if (config.env !== 'development' && config.mailer.overrideEmail) {
 
 let mailer = Mailer(config.mailer)
 ```
-<<<<<<< HEAD
 
 ## Folders
 
@@ -130,5 +129,3 @@ When you initialize the mailer then you can call this methods:
 
 08/09/2017: added global from (changes on send and on RenderAndSend)
 02/12/2017: initial release
-=======
->>>>>>> ca323969110f5831cb703035f196df42ac0042bf
