@@ -8,6 +8,8 @@
 - Nodemailer
 - Typescript
 
+It takes an array of configuration and a folder with header footer or more partials and that template, it inlines css with juice, and compose the final email.
+
 ## Configuration for the Mailer
 
 The configuration is very easy:
@@ -113,6 +115,36 @@ templates
     └── templates
         ├── access.html
         └── welcome.html
+```
+
+```
+// Input
+// base.html
+<head>
+</head>
+<body>
+    {{ Compile __body__ }}
+</body>
+</html>
+
+// footer.html
+<footer>emailer-hbs 2017</footer>
+
+// welcome.html
+<h1>Hi</h1>
+{{> footer}}
+```
+
+```
+// Output
+// welcome.html
+<head>
+</head>
+<body>
+    <h1>Hi</h1>
+    <footer>emailer-hbs 2017</footer>
+</body>
+</html>
 ```
 
 ## Methods
