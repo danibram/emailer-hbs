@@ -39,7 +39,8 @@ export class Emailer {
         forEachFileInFolder(folder, (dir, file) => {
             let fileArray = file.split('.')
             fileArray.pop()
-            emails[fileArray.join('.')] = require(path.resolve(path.join(dir, file)))
+            let data= require(path.resolve(path.join(dir, file)))
+            emails[fileArray.join('.')] = data.default ? data.default : data
         })
         this.emails = emails
     }
