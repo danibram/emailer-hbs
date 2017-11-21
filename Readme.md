@@ -129,5 +129,6 @@ When you initialize the mailer then you can call this methods:
 
 ## Changelog
 
+- ***21/11/2017***: added support for export default in configurations
 - ***08/09/2017***: added global from (changes on RenderAndSend)
 - ***02/12/2017***: initial release
