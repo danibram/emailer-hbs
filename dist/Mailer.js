@@ -25,10 +25,9 @@ class Emailer {
     _prepareEmails(folder) {
         let emails = {};
         forEachFileInFolder(folder, (dir, file) => {
-            let fileArray = file.split('.');
-            fileArray.pop();
+            let fileWithoutExt = file.split('.').reverse().slice(1).reverse().join('.');
             let data = require(path.resolve(path.join(dir, file)));
-            emails[fileArray.join('.')] = data.default ? data.default : data;
+            emails[fileWithoutExt] = data.default ? data.default : data;
         });
         this.emails = emails;
     }
@@ -40,7 +39,8 @@ class Emailer {
         });
         forEachFileInFolder(`${output}/${partials}`, function (folder, file) {
             let html = fs.readFileSync(path.resolve(`${folder}/${file}`));
-            Handlebars.registerPartial(file.split('.')[0], html.toString());
+            let fileWithoutExt = file.split('.').reverse().slice(1).reverse().join('.');
+            Handlebars.registerPartial(fileWithoutExt, html.toString());
         });
     }
     _joinCss() {
