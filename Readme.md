@@ -36,11 +36,11 @@ That is the explanation:
 - templates: Where inside the input are the templates
 - partials: Where inside the input are the partials
 - transport: Nodemailer Transport with your config ready
-- emailsDirectory: Path of your email configuration
+- emailsDirectory: Path of your emails configuration
 
 ## Emails configuration
 
-An example of an email configration:
+An example of an email configuration:
 
 ```
 {
