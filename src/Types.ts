@@ -1,6 +1,6 @@
 export interface IConfig {
     overrideEmail: string | null
-    from: string | null
+    from?: string | null
     css: string[]
     input: string
     output: string

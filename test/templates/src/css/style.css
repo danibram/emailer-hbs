@@ -1,0 +1,99 @@
+.header {
+    background: #787878;
+}
+
+.header .columns {
+    padding-bottom: 0;
+}
+
+.header p {
+    color: #fff;
+    margin-bottom: 0;
+}
+
+.header .wrapper-inner {
+    padding: 20px;
+    /*controls the height of the header*/
+}
+
+.header .container {
+    background: #787878;
+}
+
+.wrapper.secondary {
+    background: #f3f3f3;
+}
+
+html {
+    min-height: 100%;
+    background: #f3f3f3;
+}
+
+table.menu {
+    width: 580px;
+}
+table.menu td.menu-item,
+table.menu th.menu-item {
+    padding: 10px;
+    padding-right: 10px;
+}
+table.menu td.menu-item a,
+table.menu th.menu-item a {
+    color: #787878;
+}
+
+table.menu.vertical td.menu-item,
+table.menu.vertical th.menu-item {
+    padding: 10px;
+    padding-right: 0;
+    display: block;
+}
+table.menu.vertical td.menu-item a,
+table.menu.vertical th.menu-item a {
+    width: 100%;
+}
+
+table.menu.vertical td.menu-item table.menu.vertical td.menu-item,
+table.menu.vertical td.menu-item table.menu.vertical th.menu-item,
+table.menu.vertical th.menu-item table.menu.vertical td.menu-item,
+table.menu.vertical th.menu-item table.menu.vertical th.menu-item {
+    padding-left: 10px;
+}
+
+table.menu.text-center a {
+    text-align: center;
+}
+
+.menu[align='center'] {
+    width: auto !important;
+}
+
+table.highlight:hover td {
+    background: #787878 !important;
+}
+
+table.button.highlight table a {
+    background: #fff;
+    border: 2px solid #787878;
+    color: #787878;
+}
+
+table.button.highlight table td {
+    background: #fff;
+    border: 2px solid #787878;
+    color: #787878;
+}
+
+table.button.highlight table a {
+    background: #fff;
+    border: 0px solid #787878;
+    color: #787878;
+}
+
+table.button.highlight:hover table td {
+    background: #555;
+}
+
+table.button.highlight:hover table a {
+    border: 0px solid #555;
+}

@@ -18,7 +18,7 @@ const forEachFileInFolder = function(folder, fn) {
 export class Emailer {
     config: IConfig
     emails: IEmails
-    mailer
+    mailer: nodemailer.Transporter
 
     constructor(config: IConfig) {
         this.config = config
