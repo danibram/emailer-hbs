@@ -1,13 +1,11 @@
-import * as path from 'path'
 import * as fs from 'fs'
-
 import * as Handlebars from 'handlebars'
 import * as juice from 'juice'
 import * as nodemailer from 'nodemailer'
-
+import * as path from 'path'
 import { IConfig, IEmail, IEmails } from './Types'
 
-const forEachFileInFolder = function(folder, fn){
+const forEachFileInFolder = function(folder, fn) {
     let files = fs.readdirSync(path.resolve(folder))
     files
         .filter(file => file.indexOf('.js.map') !== 0)
@@ -17,87 +15,112 @@ const forEachFileInFolder = function(folder, fn){
         })
 }
 
-
 export class Emailer {
-
     config: IConfig
     emails: IEmails
-    mailer: nodemailer.Transporter
+    mailer
 
-    constructor(config: IConfig){
+    constructor(config: IConfig) {
         this.config = config
 
-        this.mailer = nodemailer.createTransport(this.config.transport);
+        this.mailer = nodemailer.createTransport(this.config.transport)
 
         this._prepareEmails(config.emailsDirectory)
         this._attachPartialsToHandlebars()
         this.cacheEmails()
     }
 
-    _prepareEmails(folder: string){
+    _prepareEmails(folder: string) {
         let emails = {}
         forEachFileInFolder(folder, (dir, file) => {
-            let fileWithoutExt = file.split('.').reverse().slice(1).reverse().join('.')
+            let fileWithoutExt = file
+                .split('.')
+                .reverse()
+                .slice(1)
+                .reverse()
+                .join('.')
             let data = require(path.resolve(path.join(dir, file)))
             emails[fileWithoutExt] = data.default ? data.default : data
         })
         this.emails = emails
     }
 
-    _attachPartialsToHandlebars(){
-        let {output, partials} = this.config
+    _attachPartialsToHandlebars() {
+        let { output, partials } = this.config
         let blocks = Object.create(null)
 
         Handlebars.registerHelper('Compile', function(html, context) {
-            return new Handlebars.SafeString(Handlebars.compile(html.toString())(context))
-        });
+            return new Handlebars.SafeString(
+                Handlebars.compile(html.toString())(context)
+            )
+        })
 
-        forEachFileInFolder(`${output}/${partials}`, function(folder, file){
+        forEachFileInFolder(`${output}/${partials}`, function(folder, file) {
             let html = fs.readFileSync(path.resolve(`${folder}/${file}`))
-            let fileWithoutExt = file.split('.').reverse().slice(1).reverse().join('.')
-            Handlebars.registerPartial(fileWithoutExt, html.toString());
+            let fileWithoutExt = file
+                .split('.')
+                .reverse()
+                .slice(1)
+                .reverse()
+                .join('.')
+            Handlebars.registerPartial(fileWithoutExt, html.toString())
         })
     }
 
-    _joinCss(){
+    _joinCss() {
         let finalCss = ''
-        this.config.css.forEach((file) => {
+        this.config.css.forEach(file => {
             finalCss = finalCss + fs.readFileSync(path.resolve(file))
         })
 
         return finalCss
     }
 
-    _compileTemplate(template: string, data?: Object): string{
-        data = (data) ? data : {}
+    _compileTemplate(template: string, data?: Object): string {
+        data = data ? data : {}
 
-        let {output, templates, partials} = this.config
-        let htmlBody = fs.readFileSync(path.resolve(`${output}/${templates}/${template}.html`))
-        let htmlBase = fs.readFileSync(path.resolve(`${output}/${partials}/base.html`))
+        let { output, templates, partials } = this.config
+        let htmlBody = fs.readFileSync(
+            path.resolve(`${output}/${templates}/${template}.html`)
+        )
+        let htmlBase = fs.readFileSync(
+            path.resolve(`${output}/${partials}/base.html`)
+        )
 
-        data['__body__'] = new Handlebars.SafeString(Handlebars.compile(htmlBody.toString())(data))
+        data['__body__'] = new Handlebars.SafeString(
+            Handlebars.compile(htmlBody.toString())(data)
+        )
 
         return Handlebars.compile(htmlBase.toString())(data)
     }
 
-    cacheEmails(){
+    cacheEmails() {
         let finalCss = this._joinCss()
-        let {input, output, partials, templates} = this.config
+        let { input, output, partials, templates } = this.config
 
-        Array(partials, templates)
-            .forEach((tmp) => {
-                forEachFileInFolder(`${input}/${tmp}`, (folder, file) => {
-                    let html = fs.readFileSync(path.resolve(`${input}/${tmp}/${file}`))
-                    let newHtml = juice.inlineContent(html.toString(), finalCss)
-                    fs.writeFileSync(path.resolve(`${output}/${tmp}/${file}`), newHtml, {encoding: 'utf8'})
-                })
+        Array(partials, templates).forEach(tmp => {
+            forEachFileInFolder(`${input}/${tmp}`, (folder, file) => {
+                let html = fs.readFileSync(
+                    path.resolve(`${input}/${tmp}/${file}`)
+                )
+                let newHtml = juice.inlineContent(html.toString(), finalCss)
+                fs.writeFileSync(
+                    path.resolve(`${output}/${tmp}/${file}`),
+                    newHtml,
+                    {
+                        encoding: 'utf8'
+                    }
+                )
             })
-
+        })
     }
 
-    renderEmail(emailCfg: IEmail, data?: Object): { html: string, subject: string } {
+    renderEmail(
+        emailCfg: IEmail,
+        data?: Object
+    ): { html: string; subject: string } {
         data = Object.assign({}, emailCfg.dummyData, data)
-        data = (emailCfg.composeData) ? emailCfg.composeData(data) : data
+        data = emailCfg.composeData ? emailCfg.composeData(data) : data
 
         return {
             html: this._compileTemplate(emailCfg.template, data),
@@ -115,32 +138,48 @@ export class Emailer {
         })
     }
 
-    renderTemplate(emailKey: string, data?: Object): Promise<{ html: string, subject:string }> {
-        return this.getconfig(emailKey)
-            .then(cfg => this.renderEmail(cfg, data))
+    renderTemplate(
+        emailKey: string,
+        data?: Object
+    ): Promise<{ html: string; subject: string }> {
+        return this.getconfig(emailKey).then(cfg => this.renderEmail(cfg, data))
     }
 
-    renderAndSend(to, emailKey, data?: Object, from?: string): Promise<nodemailer.SentMessageInfo> {
-
+    renderAndSend(
+        to,
+        emailKey,
+        data?: Object,
+        from?: string
+    ): Promise<nodemailer.SentMessageInfo> {
         return this.getconfig(emailKey)
             .then(cfg => this.renderEmail(cfg, data))
-            .then(( {subject, html } ) => this.sendEmail({
-                from: from
-                    ? from
-                    : this.config.from
+            .then(({ subject, html }) =>
+                this.sendEmail({
+                    from: from
+                        ? from
+                        : this.config.from
                         ? this.config.from
                         : 'postmaster',
-                to:  this.config.overrideEmail
-                    ? this.config.overrideEmail
-                    : to,
-                subject,
-                html
-            }))
+                    to: this.config.overrideEmail
+                        ? this.config.overrideEmail
+                        : to,
+                    subject,
+                    html
+                })
+            )
     }
 
-    sendEmail(data: { from: string, to: string, subject: string, html: string }): Promise<nodemailer.SentMessageInfo> {
-        return new Promise((resolve, reject) => this.mailer.sendMail(data, (err, info) => {
-                if (err){ reject(err) }
+    sendEmail(data: {
+        from: string
+        to: string
+        subject: string
+        html: string
+    }): Promise<nodemailer.SentMessageInfo> {
+        return new Promise((resolve, reject) =>
+            this.mailer.sendMail(data, (err, info) => {
+                if (err) {
+                    reject(err)
+                }
                 resolve(info)
             })
         )

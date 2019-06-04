@@ -3,7 +3,7 @@ import { IConfig, IEmail, IEmails } from './Types';
 export declare class Emailer {
     config: IConfig;
     emails: IEmails;
-    mailer: nodemailer.Transporter;
+    mailer: any;
     constructor(config: IConfig);
     _prepareEmails(folder: string): void;
     _attachPartialsToHandlebars(): void;

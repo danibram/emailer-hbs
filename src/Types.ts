@@ -1,12 +1,12 @@
 export interface IConfig {
-    overrideEmail: string|null
-    from: string|null
+    overrideEmail: string | null
+    from: string | null
     css: string[]
     input: string
     output: string
     templates: string
     partials: string
-    transport: any,
+    transport: any
     emailsDirectory: string
 }
 

@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const path = require("path");
 const fs = require("fs");
 const Handlebars = require("handlebars");
 const juice = require("juice");
 const nodemailer = require("nodemailer");
+const path = require("path");
 const forEachFileInFolder = function (folder, fn) {
     let files = fs.readdirSync(path.resolve(folder));
     files
@@ -25,7 +25,12 @@ class Emailer {
     _prepareEmails(folder) {
         let emails = {};
         forEachFileInFolder(folder, (dir, file) => {
-            let fileWithoutExt = file.split('.').reverse().slice(1).reverse().join('.');
+            let fileWithoutExt = file
+                .split('.')
+                .reverse()
+                .slice(1)
+                .reverse()
+                .join('.');
             let data = require(path.resolve(path.join(dir, file)));
             emails[fileWithoutExt] = data.default ? data.default : data;
         });
@@ -39,19 +44,24 @@ class Emailer {
         });
         forEachFileInFolder(`${output}/${partials}`, function (folder, file) {
             let html = fs.readFileSync(path.resolve(`${folder}/${file}`));
-            let fileWithoutExt = file.split('.').reverse().slice(1).reverse().join('.');
+            let fileWithoutExt = file
+                .split('.')
+                .reverse()
+                .slice(1)
+                .reverse()
+                .join('.');
             Handlebars.registerPartial(fileWithoutExt, html.toString());
         });
     }
     _joinCss() {
         let finalCss = '';
-        this.config.css.forEach((file) => {
+        this.config.css.forEach(file => {
             finalCss = finalCss + fs.readFileSync(path.resolve(file));
         });
         return finalCss;
     }
     _compileTemplate(template, data) {
-        data = (data) ? data : {};
+        data = data ? data : {};
         let { output, templates, partials } = this.config;
         let htmlBody = fs.readFileSync(path.resolve(`${output}/${templates}/${template}.html`));
         let htmlBase = fs.readFileSync(path.resolve(`${output}/${partials}/base.html`));
@@ -61,18 +71,19 @@ class Emailer {
     cacheEmails() {
         let finalCss = this._joinCss();
         let { input, output, partials, templates } = this.config;
-        Array(partials, templates)
-            .forEach((tmp) => {
+        Array(partials, templates).forEach(tmp => {
             forEachFileInFolder(`${input}/${tmp}`, (folder, file) => {
                 let html = fs.readFileSync(path.resolve(`${input}/${tmp}/${file}`));
                 let newHtml = juice.inlineContent(html.toString(), finalCss);
-                fs.writeFileSync(path.resolve(`${output}/${tmp}/${file}`), newHtml, { encoding: 'utf8' });
+                fs.writeFileSync(path.resolve(`${output}/${tmp}/${file}`), newHtml, {
+                    encoding: 'utf8'
+                });
             });
         });
     }
     renderEmail(emailCfg, data) {
         data = Object.assign({}, emailCfg.dummyData, data);
-        data = (emailCfg.composeData) ? emailCfg.composeData(data) : data;
+        data = emailCfg.composeData ? emailCfg.composeData(data) : data;
         return {
             html: this._compileTemplate(emailCfg.template, data),
             subject: Handlebars.compile(emailCfg.title)(data)
@@ -87,8 +98,7 @@ class Emailer {
         });
     }
     renderTemplate(emailKey, data) {
-        return this.getconfig(emailKey)
-            .then(cfg => this.renderEmail(cfg, data));
+        return this.getconfig(emailKey).then(cfg => this.renderEmail(cfg, data));
     }
     renderAndSend(to, emailKey, data, from) {
         return this.getconfig(emailKey)
