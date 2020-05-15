@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.emailer = exports.Emailer = void 0;
 const fs = require("fs");
 const Handlebars = require("handlebars");
 const juice = require("juice");
